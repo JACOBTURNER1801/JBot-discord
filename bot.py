@@ -21,6 +21,7 @@ def commands():
         jbot.commands(): 'returns the commands'
         jbot.add_quote() <quote>: 'adds quote into quotes list'
         jbot.display_quotes(): 'displays the quotes'
+        jbot.bug_report(): 'tells you how to report a bug'
     }
 ```"""
 
@@ -66,9 +67,13 @@ async def on_message(message):
         await message.channel.send(str(output))
 
     elif "jbot.add_quote()" == message.content.lower():
-        # the [14:] is because of the jbot.add_quote() command being 15
+        # the [15:] is because of the jbot.add_quote() command being 15
         # characters and we don't want to add that to the quotes list
         await message.channel.send(f"adding {message.content[15:]} to the quotes list")
         Quotes_obj.modify_quotes(str(message.content[15:]))
         await message.channel.send("should be done, now displaying the quotes again")
         await message.channel.send(str(Quotes_obj.print_quotes()))
+
+    elif "jbot.bug_report()" == message.content.lower():
+        link = "https://github.com/JACOBTURNER1801/JBot-discord/issues"
+        await message.channel.send(f"In order to report a bug you need to follow {link}")
