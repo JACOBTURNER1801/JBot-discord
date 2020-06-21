@@ -21,12 +21,14 @@ def commands():
         jbot.commands(): 'returns the commands'
         jbot.add_quote() <quote>: 'adds quote into quotes list'
         jbot.display_quotes(): 'displays the quotes'
+        jbot.get_quote(): 'randomly gets a quote from the list'
         jbot.bug_report(): 'tells you how to report a bug'
     }
 ```"""
 
 list_quotes = [
     "Hello there from the bot, this is an example of an inspirational message",
+    "To dare is to do - Tottenham Hotspur FC who continuesly bottle things lmao"
 ]
 
 # create Quotes object
@@ -59,7 +61,7 @@ async def on_message(message):
 
     elif "jbot.logout()" == message.content.lower() and str(message.author) != "Jacob#3584":
         await message.channel.send("Only Jacob can close me down!")
-    
+
     elif "jbot.logout()" == message.content.lower() and str(message.author) == "Jacob#3584":
         await message.channel.send("logging out")
         await client.close()
@@ -77,6 +79,16 @@ async def on_message(message):
         await message.channel.send("should be done, now displaying the quotes again")
         await message.channel.send(str(Quotes_obj.print_quotes()))
 
+    elif "jbot.get_quote()" == message.content.lower():
+        # get a quote
+        randomly_generated_quote: str = Quotes.get_quote(list_quotes)
+        # send the quote @'ing the user
+        message.channel.send(
+            f" '{randomly_generated_quote}' @{message.author.name} ")
+
     elif "jbot.bug_report()" == message.content.lower():
         link = "https://github.com/JACOBTURNER1801/JBot-discord/issues"
         await message.channel.send(f"In order to report a bug you need to follow {link}")
+
+
+client.run(TOKEN)
