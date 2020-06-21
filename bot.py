@@ -10,7 +10,7 @@ from Python.JBot.quotes import Quotes
 client = discord.Client()
 
 # GLOBAL VARIABLES
-TOKEN = open("token.txt", "a").read()
+TOKEN = open("C:/Users/FiercePC/Desktop/projects/token.txt", "a").read()
 SERVER_ID = 394868206545797130
 
 commands_usable = """```py
