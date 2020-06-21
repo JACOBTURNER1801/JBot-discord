@@ -57,9 +57,12 @@ async def on_message(message):
     elif "jbot.hello()" == message.content.lower():
         await message.channel.send(f"hello there {message.author.name}")
 
-    elif "jbot.logout()" == message.content.lower():
-        await message.channel.send("Logging out")
-        await client.logout()
+    elif "jbot.logout()" == message.content.lower() and str(message.author) != "Jacob#3584":
+        await message.channel.send("Only Jacob can close me down!")
+    
+    elif "jbot.logout()" == message.content.lower() and str(message.author) == "Jacob#3584":
+        await message.channel.send("logging out")
+        await client.close()
 
     elif "jbot.display_quotes()" == message.content.lower():
         output = Quotes_obj.print_quotes()
