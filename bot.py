@@ -1,11 +1,8 @@
 import discord
 from discord.ext import commands
-import re
-import time
-import asyncio
-import random
 import Python.JBot.quotes
 from Python.JBot.quotes import Quotes
+import asyncio
 
 client = discord.Client()
 
@@ -16,10 +13,10 @@ SERVER_ID = 394868206545797130
 commands_usable = """```py
 def commands():
     return {
+        jbot.commands(): 'returns the commands'
         jbot.hello(): 'says hello'
         jbot.logout(): 'disconnects the bot'
-        jbot.commands(): 'returns the commands'
-        jbot.add_quote() <quote>: 'adds quote into quotes list'
+        jbot.add_quote() "quote": 'adds quote into quotes list'
         jbot.display_quotes(): 'displays the quotes'
         jbot.get_quote(): 'randomly gets a quote from the list'
         jbot.bug_report(): 'tells you how to report a bug'
