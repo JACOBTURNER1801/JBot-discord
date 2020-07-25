@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
-import Python.JBot.quotes
+# doesn't find the file for some reason (it's literally in the same folder)
+import quotes
 from Python.JBot.quotes import Quotes
 import asyncio
 
