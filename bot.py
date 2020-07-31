@@ -1,15 +1,19 @@
 import discord
 from discord.ext import commands
 # doesn't find the file for some reason (it's literally in the same folder)
-import quotes
-from Python.JBot.quotes import Quotes
+# import Python.JBot.quotes
+# from Python.JBot.quotes import Quotes
 import asyncio
+from google import google
 
 client = discord.Client()
 
 # GLOBAL VARIABLES
 TOKEN = open("C:/Users/FiercePC/Desktop/projects/token.txt", "a").read()
 SERVER_ID = 394868206545797130
+# for the search feature
+NUM_PAGES = 1  # searches 1 page
+
 
 commands_usable = """```py
 def commands():
@@ -17,13 +21,17 @@ def commands():
         jbot.commands(): 'returns the commands'
         jbot.hello(): 'says hello'
         jbot.logout(): 'disconnects the bot'
+        jbot.bug_report(): 'tells you how to report a bug'
+        jbot.search(): 'googles what you put after'
+    }
+    DEPRECATED:
         jbot.add_quote() "quote": 'adds quote into quotes list'
         jbot.display_quotes(): 'displays the quotes'
         jbot.get_quote(): 'randomly gets a quote from the list'
-        jbot.bug_report(): 'tells you how to report a bug'
-    }
+        
 ```"""
 
+'''
 list_quotes = [
     "Hello there from the bot, this is an example of an inspirational message",
     "To dare is to do - Tottenham Hotspur FC who continuesly bottle things lmao"
@@ -31,7 +39,7 @@ list_quotes = [
 
 # create Quotes object
 Quotes_obj = Quotes(list_quotes)
-
+'''
 # Bot logging in
 
 
@@ -63,30 +71,18 @@ async def on_message(message):
     elif "jbot.logout()" == message.content.lower() and str(message.author) == "Jacob#3584":
         await message.channel.send("logging out")
         await client.close()
-
-    elif "jbot.display_quotes()" == message.content.lower():
-        output = Quotes_obj.print_quotes()
-        await message.channel.send("here are the quotes: ")
-        await message.channel.send(str(output))
-
-    elif "jbot.add_quote()" == message.content.lower():
-        # the [15:] is because of the jbot.add_quote() command being 15
-        # characters and we don't want to add that to the quotes list
-        await message.channel.send(f"adding {message.content[15:]} to the quotes list")
-        Quotes_obj.modify_quotes(str(message.content[15:]))
-        await message.channel.send("should be done, now displaying the quotes again")
-        await message.channel.send(str(Quotes_obj.print_quotes()))
-
-    elif "jbot.get_quote()" == message.content.lower():
-        # get a quote
-        randomly_generated_quote: str = Quotes.get_quote(list_quotes)
-        # send the quote @'ing the user
-        message.channel.send(
-            f" '{randomly_generated_quote}' @{message.author.name} ")
+    # see quotes conditional statements in a separate text file
 
     elif "jbot.bug_report()" == message.content.lower():
         link = "https://github.com/JACOBTURNER1801/JBot-discord/issues"
         await message.channel.send(f"In order to report a bug you need to follow {link}")
+    elif "jbot.search()" == message.content.lower():
+        # search for the phrase after the 13th character
+        phrase: str = message.content[12:]
+        search_result = google.search(phrase, NUM_PAGES)
+        search_link = search_result.link
+        search_name = search_result.name
+        await message.channel.send(f"Name : {search_name}, Link: {search_link}")
 
 
 client.run(TOKEN)
